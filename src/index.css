@@ -2,8 +2,12 @@
   line-height: 1.5;
   font-weight: 400;
   --color-blue: #2672FF;
+  --color-blue-shadow: rgba(38, 114, 255, 0.76);
+  --color-light: #F0FFFB;
   --color-aqua: #26D2A8;
-  --color-white: #ffffff
+  --color-aqua-shadow: rgba(38, 210, 167, 0.76);
+  --color-white: #ffffff;
+  --color-gray: #f1f1f1;
   /* color-scheme: light dark; */
   /* color: rgba(255, 255, 255, 0.87); */
 }
@@ -16,11 +20,38 @@
 html {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   scroll-behavior: smooth;
+  color: #404040;
 }
+
 a{
   text-decoration: none;
   font-size: 1rem;
 }
+label{
+  font-weight: bold;
+}
+input, textarea, button {
+  outline: none;
+}
+button{
+  border: none;
+}
+input[type="checkbox"], input[type="radio"], input[type="number"], input[type="range"]{
+  accent-color: var(--color-blue);
+}
+
+input {
+  border: none;
+  background-color: #E9EAEB;
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+
+.button{
+  background-color: var(--color-gray);
+
+}
+
 /* 
 body {
   margin: 0;
