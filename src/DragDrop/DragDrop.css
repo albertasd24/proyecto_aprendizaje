@@ -1,0 +1,13 @@
+.dragdrop {
+  
+}
+.container{
+    position: relative;
+    background-color: aqua;
+    width: 250px;
+    height: 400px;
+    overflow: hidden;
+}
+.draggable{
+    background-color: azure;
+}

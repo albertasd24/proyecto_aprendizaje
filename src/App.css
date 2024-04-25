@@ -30,8 +30,8 @@
   background-repeat: no-repeat;
 }
 
-.main-login h2,
-.main-consult h2 {
+.main-login > h2,
+.main-consult > h2 {
   font-size: 2rem;
   font-weight: 500;
 }
