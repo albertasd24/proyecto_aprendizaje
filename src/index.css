@@ -8,6 +8,7 @@
   --color-aqua-shadow: rgba(38, 210, 167, 0.76);
   --color-white: #ffffff;
   --color-gray: #f1f1f1;
+  --color-red: #e43939;
   /* color-scheme: light dark; */
   /* color: rgba(255, 255, 255, 0.87); */
 }
@@ -50,6 +51,12 @@ input {
 .button{
   background-color: var(--color-gray);
 
+}
+
+.text-error{
+  color: var(--color-red);
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 /* 

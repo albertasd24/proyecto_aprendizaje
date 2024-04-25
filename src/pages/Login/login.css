@@ -24,6 +24,7 @@
 .login-form input {
   height: 2rem;
   width: 100%;
+  font-size: 1rem;
 }
 
 .checkbox {
@@ -46,6 +47,7 @@
 .login-form__actions,
 .login-form__actions a {
   font-size: 0.8rem;
+  color: black;
 }
 
 .button-login {
@@ -53,13 +55,14 @@
   padding: 8px 10px;
   color: var(--color-white);
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.2rem;
   border-radius: 5px;
   width: 50%;
   display: block;
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 5px;
+  box-shadow: 0 0 10px rgba(122, 122, 122, 0.726);
 }
 
 .login-form-back {

@@ -1,0 +1,19 @@
+.dashboardlayout {
+  display: grid;
+  grid-template-columns: 20% auto;
+
+}
+.sidebar{
+    background-color: var(--color-blue);
+    height: 100vh;
+    position: relative;
+}
+.sidebar-links{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid blue;
+}
+.dashboard-content{
+    overflow-y: auto;
+    background-color: rgb(213, 216, 219);
+}

@@ -1,5 +1,6 @@
 import iconKetasoft from "./assets/iconKetasoft.svg"
 import './App.css'
+import { Link } from "react-router-dom"
 
 function App() {
 
@@ -12,7 +13,7 @@ function App() {
           <h2 className='main-login--title'>Ingresar a la <span>Aplicación</span></h2>
           <div className="image"></div>
           <article className="main-links">
-            <a href="">Ingresar</a>
+            <Link to={"login"} >Ingresar</Link>
             <a href="">Instrucciones</a>
           </article>
         </section>
