@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 import iconKetasoft from "../../assets/iconKetasoft.svg";
 import { useForm } from "react-hook-form";
 const Login = () => {
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [remember, setRemember] = useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm();

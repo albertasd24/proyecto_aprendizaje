@@ -1,11 +1,11 @@
 import React from 'react';
 
-const FotografiaTemplate = ({ onMouseDown }) => {
+const FotografiaTemplate = ({ dimensions = {}, onMouseDown }) => {
     return (
         <div
             className="foto"
             onMouseDown={onMouseDown}
-            style={{ cursor: 'grab' }}
+            style={{ cursor: 'grab', width: `${dimensions.width}cm`, height: `${dimensions.height}cm` }}
             draggable="false"
         >
             Fotografía

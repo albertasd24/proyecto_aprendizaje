@@ -4,7 +4,7 @@ import FotografiaTemplate from '../FotografiaTemplate/FotografiaTemplate';
 import CodeBar from '../CodeBar/CodeBar';
 import CodeQr from '../CodeQr/CodeQr';
 
-const PreviewTemplate = ({ seguridad = "Ninguno" }) => {
+const PreviewTemplate = ({photoDimension, seguridad = "Ninguno" }) => {
     const [dragging, setDragging] = useState(false);
     const [draggedElement, setDraggedElement] = useState(null);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -67,16 +67,17 @@ const PreviewTemplate = ({ seguridad = "Ninguno" }) => {
         <div className="preview">
             <div className="preview-carnet" onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
                 <FotografiaTemplate
+                    dimensions={photoDimension}
                     onMouseDown={(e) => handleMouseDown(e, e.currentTarget, setFotoPosition)}
                     position={fotoPosition}
                 />
-                {seguridad !== "CodBarra" && (
+                {seguridad == "CodBarra" && (
                     <CodeBar
                         onMouseDown={(e) => handleMouseDown(e, e.currentTarget, setCodeBarPosition)}
                         position={codeBarPosition}
                     />
                 )}
-                {seguridad !== "CodQR" && (
+                {seguridad == "CodQR" && (
                     <CodeQr
                         onMouseDown={(e) => handleMouseDown(e, e.currentTarget, setCodeQrPosition)}
                         position={codeQrPosition}

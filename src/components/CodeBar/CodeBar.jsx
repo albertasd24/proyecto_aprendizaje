@@ -1,5 +1,4 @@
-import React from 'react';
-
+import "./CodeBar.css"
 const CodeBar = ({ onMouseDown }) => {
     return (
         <div

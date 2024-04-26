@@ -5,11 +5,25 @@ import { PreviewTemplate } from '../PreviewTemplate';
 
 const FormTemplate = ({ }) => {
 	const [selectedOption, setSelectedOption] = useState(null);
-	const [seguridad, setSeguridad] = useState("Ninguno")
+	const [seguridad, setSeguridad] = useState("Ninguno");
+	const [photoDimension, setPhotoDimension] = useState({ width: 2.8, height: 3 })
 
 	const handleToggle = (option) => {
 		setSelectedOption((prevOption) => (prevOption === option ? null : option));
 	};
+
+	const changePhotoDimensionHeight = (e) => {
+		console.log(e.target.value);
+		let photoHeight = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value,10).toString() || 0;
+		setPhotoDimension({ width: photoDimension.width, height: photoHeight });
+		console.log(photoDimension);
+	}
+
+	const changePhotoDimensionWith = (e) => {
+		let photoWidth = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value,10).toString() || 0;
+		setPhotoDimension({ width: photoWidth, height: photoDimension.height });
+		console.log(photoDimension);
+	}
 
 	return (
 		<section className='template'>
@@ -46,9 +60,10 @@ const FormTemplate = ({ }) => {
 					<h3 onClick={() => handleToggle('fotografia')}>Fotografía</h3>
 					{selectedOption === 'fotografia' && (
 						<div className="dropdown-menu">
-							<div className="dropdown-item">Opción 1</div>
-							<div className="dropdown-item">Opción 2</div>
-							<div className="dropdown-item">Opción 3</div>
+							<label htmlFor="">Ancho</label>
+							<input type="number" value={photoDimension.width} onChange={changePhotoDimensionWith} />
+							<label htmlFor="">Alto</label>
+							<input type="number" value={photoDimension.height} onChange={changePhotoDimensionHeight} />
 						</div>
 					)}
 				</div>
@@ -77,7 +92,7 @@ const FormTemplate = ({ }) => {
 			</article>
 			<article>
 				<h2>Vista Previa</h2>
-				<PreviewTemplate seguridad={seguridad} />
+				<PreviewTemplate photoDimension={photoDimension} seguridad={seguridad} />
 			</article>
 		</section>
 	);

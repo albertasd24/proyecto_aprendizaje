@@ -1,4 +1,4 @@
-import React from 'react';
+import "./CodeQr.css"
 
 const CodeQr = ({ onMouseDown }) => {
     return (
