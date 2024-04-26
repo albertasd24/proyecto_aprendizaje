@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './DragDrop.css';
 import PropTypes from 'prop-types';
 
-const DragDrop = ({ }) => {
+const DragDrop = ({  }) => {
 	const [dragging, setDragging] = useState(false);
 	const [position, setPosition] = useState({ x: 0, y: 0 });
 	const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -53,7 +53,7 @@ const DragDrop = ({ }) => {
 	const changePositionY = (e) => {
 		// let positionY = parseInt(e.target.value, 10).toString() || 0;
 		let positionY = isNaN(parseInt(e.target.value, 10)) ? 0 : parseInt(e.target.value, 10).toString() || 0;
-		setPosition({ x: position.x, y: positionY})
+		setPosition({ x: position.x, y: positionY })
 	}
 
 	return (

@@ -4,7 +4,6 @@ import App from "../App";
 import Login from "../pages/Login/Login";
 import DashboardLayout from "../pages/Layouts/DashboardLayout/DashboardLayout";
 import FormTemplate from "../components/FormTemplate/FormTemplate";
-import Login from "../pages/Login";
 import Template from "../Template/Template";
 import DragDrop from "../DragDrop/DragDrop";
 

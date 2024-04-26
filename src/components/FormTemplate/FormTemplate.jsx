@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './FormTemplate.css';
 import PropTypes from 'prop-types';
+import { PreviewTemplate } from '../PreviewTemplate';
 
 const FormTemplate = ({ }) => {
 	const [selectedOption, setSelectedOption] = useState(null);
+	const [seguridad, setSeguridad] = useState("Ninguno")
 
 	const handleToggle = (option) => {
 		setSelectedOption((prevOption) => (prevOption === option ? null : option));
@@ -33,9 +35,9 @@ const FormTemplate = ({ }) => {
 						<div>Vertical</div>
 					</div>
 					<label htmlFor="">Identificador de seguridad</label>
-					<input type="radio" name="seguridad" id="" />Código de Barra
-					<input type="radio" name="seguridad" id="" />Código QR
-					<input type="radio" name="seguridad" id="" />Ninguno
+					<input type="radio" name="seguridad" value={"CodBarra"} onChange={() => setSeguridad("CodBarra")} />Código de Barra
+					<input type="radio" name="seguridad" value={"CodQR"} onChange={() => setSeguridad("CodQR")} />Código QR
+					<input type="radio" name="seguridad" value={"Ninguno"} onChange={() => setSeguridad("Ninguno")} />Ninguno
 					<label htmlFor="">Cargar Fondo</label>
 					<small>Si no carga fondo, se usara el color blanco por defecto</small>
 					<input type="file" name="" id="" />
@@ -75,9 +77,7 @@ const FormTemplate = ({ }) => {
 			</article>
 			<article>
 				<h2>Vista Previa</h2>
-				<div className="preview">
-					<div className="preview-carnet"></div>
-				</div>
+				<PreviewTemplate seguridad={seguridad} />
 			</article>
 		</section>
 	);
