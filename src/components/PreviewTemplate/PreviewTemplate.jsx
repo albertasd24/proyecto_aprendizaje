@@ -4,13 +4,26 @@ import FotografiaTemplate from '../FotografiaTemplate/FotografiaTemplate';
 import CodeBar from '../CodeBar/CodeBar';
 import CodeQr from '../CodeQr/CodeQr';
 
-const PreviewTemplate = ({photoDimension, seguridad = "Ninguno" }) => {
+const PreviewTemplate = ({ background, orientation, templateDimension, photoDimension, seguridad = "Ninguno" }) => {
     const [dragging, setDragging] = useState(false);
     const [draggedElement, setDraggedElement] = useState(null);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const [fotoPosition, setFotoPosition] = useState({ x: 0, y: 0 });
     const [codeBarPosition, setCodeBarPosition] = useState({ x: 0, y: 0 });
     const [codeQrPosition, setCodeQrPosition] = useState({ x: 0, y: 0 });
+
+    let estiloFondo = background
+        ? {
+            backgroundImage: `url(${background})`,
+            backgroundSize: "cover",
+            width:`${templateDimension.width}cm` ,
+            height: `${templateDimension.height}cm`
+        }
+        : {
+            backgroundColor: "#fff",
+            width:`${templateDimension.width}cm` ,
+            height: `${templateDimension.height}cm`
+        };
 
     const handleMouseDown = (e, element, setPosition) => {
         const containerRect = element.parentElement.getBoundingClientRect();
@@ -65,7 +78,7 @@ const PreviewTemplate = ({photoDimension, seguridad = "Ninguno" }) => {
 
     return (
         <div className="preview">
-            <div className="preview-carnet" onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
+            <div className="preview-carnet" style={estiloFondo} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
                 <FotografiaTemplate
                     dimensions={photoDimension}
                     onMouseDown={(e) => handleMouseDown(e, e.currentTarget, setFotoPosition)}
@@ -87,32 +100,34 @@ const PreviewTemplate = ({photoDimension, seguridad = "Ninguno" }) => {
             <div>
                 <h3>Fotografía:</h3>
                 <label>Posición X:</label>
-                <input type="text" value={fotoPosition.x} readOnly />
+                <input type="text" value={fotoPosition.x} />
                 <label>Posición Y:</label>
-                <input type="text" value={fotoPosition.y} readOnly />
+                <input type="text" value={fotoPosition.y} />
 
-                {seguridad !== "CodBarra" && (
+                {seguridad == "CodBarra" && (
                     <>
                         <h3>Código de barras:</h3>
                         <label>Posición X:</label>
-                        <input type="text" value={codeBarPosition.x} readOnly />
+                        <input type="text" value={codeBarPosition.x} />
                         <label>Posición Y:</label>
-                        <input type="text" value={codeBarPosition.y} readOnly />
+                        <input type="text" value={codeBarPosition.y} />
                     </>
                 )}
 
-                {seguridad !== "CodQR" && (
+                {seguridad == "CodQR" && (
                     <>
                         <h3>Código QR:</h3>
                         <label>Posición X:</label>
-                        <input type="text" value={codeQrPosition.x} readOnly />
+                        <input type="text" value={codeQrPosition.x} />
                         <label>Posición Y:</label>
-                        <input type="text" value={codeQrPosition.y} readOnly />
+                        <input type="text" value={codeQrPosition.y} />
                     </>
                 )}
             </div>
         </div>
     );
 };
-
+// PreviewTemplate.propTypes = {
+//     seguridad: PropTypes.string
+// };
 export { PreviewTemplate };
