@@ -6,6 +6,7 @@ import DashboardLayout from "../pages/Layouts/DashboardLayout/DashboardLayout";
 import FormTemplate from "../components/FormTemplate/FormTemplate";
 import Template from "../Template/Template";
 import DragDrop from "../DragDrop/DragDrop";
+import NotFound from "../pages/NotFound/NotFound";
 
 
 const AplicattionRoutes = () => {
@@ -17,6 +18,7 @@ const AplicattionRoutes = () => {
         <Route path="/d" element={<DashboardLayout />} />
         <Route path="/template" element={<FormTemplate />} />
         <Route path="/plantilla" element={<DragDrop />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
