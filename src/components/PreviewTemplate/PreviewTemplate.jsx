@@ -3,25 +3,27 @@ import './PreviewTemplate.css';
 import FotografiaTemplate from '../FotografiaTemplate/FotografiaTemplate';
 import CodeBar from '../CodeBar/CodeBar';
 import CodeQr from '../CodeQr/CodeQr';
+import { combinatdArrays } from '../../utils/arrayUtils';
 
-const PreviewTemplate = ({ background, orientation, templateDimension, photoDimension, seguridad = "Ninguno" }) => {
+const PreviewTemplate = ({ background, orientation, informationData = [], setInformationData, templateDimension, photoDimension, seguridad = "Ninguno" }) => {
     const [dragging, setDragging] = useState(false);
     const [draggedElement, setDraggedElement] = useState(null);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const [fotoPosition, setFotoPosition] = useState({ x: 0, y: 0 });
     const [codeBarPosition, setCodeBarPosition] = useState({ x: 0, y: 0 });
     const [codeQrPosition, setCodeQrPosition] = useState({ x: 0, y: 0 });
+    const [dataElementsPositions, setDataElementsPositions] = useState([]);
 
     let estiloFondo = background
         ? {
             backgroundImage: `url(${background})`,
             backgroundSize: "cover",
-            width:`${templateDimension.width}cm` ,
+            width: `${templateDimension.width}cm`,
             height: `${templateDimension.height}cm`
         }
         : {
             backgroundColor: "#fff",
-            width:`${templateDimension.width}cm` ,
+            width: `${templateDimension.width}cm`,
             height: `${templateDimension.height}cm`
         };
 
@@ -67,9 +69,27 @@ const PreviewTemplate = ({ background, orientation, templateDimension, photoDime
                     x: newX,
                     y: newY
                 });
+            } else if (draggedElement.classList.contains('dataElement')) {
+                // Guardar la última posición del elemento con la clase 'dataElement'
+                const elementRect = draggedElement.getBoundingClientRect();
+                setDataElementsPositions(prevPositions => {
+                    const updatedPositions = prevPositions.filter(item => item.nombre !== draggedElement.textContent);
+                    let dataUpdatedXY = [
+                        ...updatedPositions,
+                        {
+                            x: newX,
+                            y: newY,
+                            nombre: draggedElement.textContent
+                        }
+                    ]
+                    let informatiodCombinated = combinatdArrays(dataUpdatedXY, informationData);
+                    console.log(informatiodCombinated);
+                    return dataUpdatedXY;
+                });
             }
         }
     };
+
 
     const handleMouseUp = () => {
         setDragging(false);
@@ -84,6 +104,11 @@ const PreviewTemplate = ({ background, orientation, templateDimension, photoDime
                     onMouseDown={(e) => handleMouseDown(e, e.currentTarget, setFotoPosition)}
                     position={fotoPosition}
                 />
+                {
+                    informationData.length > 0 && (
+                        informationData.map((data, index) => <span className='dataElement' key={index} style={{ fontWeight: data.bold ? 700 : 'normal', fontStyle: data.italic ? "italic" : "normal", color: data?.color || "#000000" }} onMouseDown={(e) => handleMouseDown(e, e.currentTarget, setDraggedElement)}>{data.nombre}</span>)
+                    )
+                }
                 {seguridad == "CodBarra" && (
                     <CodeBar
                         onMouseDown={(e) => handleMouseDown(e, e.currentTarget, setCodeBarPosition)}
@@ -123,11 +148,19 @@ const PreviewTemplate = ({ background, orientation, templateDimension, photoDime
                         <input type="text" value={codeQrPosition.y} />
                     </>
                 )}
+
+                {/* Mostrar las posiciones de los elementos con la clase 'dataElement' */}
+                <h3>Elementos de datos:</h3>
+                {dataElementsPositions.map((position, index) => (
+                    <div key={index}>
+                        <label>Nombre: {position.nombre}</label>
+                        <label>Posición X: {position.x}</label>
+                        <label>Posición Y: {position.y}</label>
+                    </div>
+                ))}
             </div>
         </div>
     );
 };
-// PreviewTemplate.propTypes = {
-//     seguridad: PropTypes.string
-// };
+
 export { PreviewTemplate };

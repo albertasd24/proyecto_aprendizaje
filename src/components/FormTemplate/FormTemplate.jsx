@@ -2,12 +2,14 @@ import { useState } from 'react';
 import './FormTemplate.css';
 import PropTypes from 'prop-types';
 import { PreviewTemplate } from '../PreviewTemplate';
+import FormTemplateInformation from '../FormTemplateInformation/FormTemplateInformation';
 
 const FormTemplate = ({ }) => {
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [seguridad, setSeguridad] = useState("Ninguno");
 	const [background, setBackground] = useState();
 	const [orientation, setOrientation] = useState("vertical");
+	const [informationTemplate, setinformationTemplate] = useState([])
 	const [backgroundUrL, setBackgroundUrl] = useState("");
 	const [tipoSectorPlantilla, setTipoSectorPlantilla] = useState("");
 	const [photoDimension, setPhotoDimension] = useState({ width: 2.8, height: 3 })
@@ -19,25 +21,25 @@ const FormTemplate = ({ }) => {
 
 	const changePhotoDimensionHeight = (e) => {
 		console.log(e.target.value);
-		let photoHeight = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value,10).toString() || 0;
+		let photoHeight = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value, 10).toString() || 0;
 		setPhotoDimension({ width: photoDimension.width, height: photoHeight });
 		console.log(photoDimension);
 	}
 
 	const changePhotoDimensionWith = (e) => {
-		let photoWidth = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value,10).toString() || 0;
+		let photoWidth = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value, 10).toString() || 0;
 		setPhotoDimension({ width: photoWidth, height: photoDimension.height });
 		console.log(photoDimension);
 	}
 	const changeTemplateDimensionHeight = (e) => {
 		console.log(e.target.value);
-		let templateHeight = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value,10).toString() || 0;
+		let templateHeight = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value, 10).toString() || 0;
 		setTemplateDimension({ width: templateDimension.width, height: templateHeight });
 		console.log(photoDimension);
 	}
 
 	const changeTemplateDimensionWith = (e) => {
-		let templateWidth = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value,10).toString() || 0;
+		let templateWidth = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value, 10).toString() || 0;
 		setTemplateDimension({ width: templateWidth, height: photoDimension.height });
 		console.log(photoDimension);
 	}
@@ -50,12 +52,23 @@ const FormTemplate = ({ }) => {
 
 	const changeOrientation = (orientation) => {
 		if (orientation === "vertical") {
-            setOrientation("vertical");
-			setTemplateDimension({width:templateDimension.height, height: templateDimension.width})
-        } else {
-            setOrientation("horizontal");
-			setTemplateDimension({width:templateDimension.height, height: templateDimension.width})
-        }
+			setOrientation("vertical");
+			setTemplateDimension({ width: templateDimension.height, height: templateDimension.width })
+		} else {
+			setOrientation("horizontal");
+			setTemplateDimension({ width: templateDimension.height, height: templateDimension.width })
+		}
+	}
+
+	const changeTypeTemplate = (e) => {
+		setTipoSectorPlantilla(e.target.value);
+		setinformationTemplate([])
+	}
+
+
+
+	const removeBackground = () => {
+		setBackgroundUrl("");
 	}
 
 	return (
@@ -67,19 +80,19 @@ const FormTemplate = ({ }) => {
 					<label htmlFor="nameTemlate">Nombre Plantilla</label>
 					<input type="text" id='nameTemlate' />
 					<label htmlFor="">Sector del tipo plantilla</label>
-					<select name="" id="" onChange={(e) => setTipoSectorPlantilla(e.target.value)}>
+					<select name="" id="" onChange={changeTypeTemplate}>
 						<option value="" selected disabled>Seleccionar</option>
 						<option value="academico">Academico</option>
 						<option value="empresarial">Empresarial</option>
 					</select>
 					<label htmlFor="withTemplate">Ancho </label>
-					<input type="number" name="" min={0} value={templateDimension.width}  id="withTemplate" onChange={changeTemplateDimensionWith} />
+					<input type="number" name="" min={0} value={templateDimension.width} id="withTemplate" onChange={changeTemplateDimensionWith} />
 					<label htmlFor="heightTemplate">Alto </label>
 					<input type="number" name="" min={0} value={templateDimension.height} id="heightTemplate" onChange={changeTemplateDimensionHeight} />
 					<label htmlFor="">Orientación</label>
-					<div  className='orientations'>
-						<button type='button' className={orientation=="vertical"?"orientation orientationSelected orientation-vertical":"orientation orientation-vertical"} onClick={()=>changeOrientation("vertical")}>Vertical</button>
-						<button type='button' className={orientation=="horizontal"?"orientation orientationSelected orientation-horizontal":"orientation orientation-horizontal"} onClick={()=>changeOrientation("horizontal")}>Horizontal</button>
+					<div className='orientations'>
+						<button type='button' className={orientation == "vertical" ? "orientation orientationSelected orientation-vertical" : "orientation orientation-vertical"} onClick={() => changeOrientation("vertical")}>Vertical</button>
+						<button type='button' className={orientation == "horizontal" ? "orientation orientationSelected orientation-horizontal" : "orientation orientation-horizontal"} onClick={() => changeOrientation("horizontal")}>Horizontal</button>
 					</div>
 					<label htmlFor="">Identificador de seguridad</label>
 					<input type="radio" name="seguridad" value="CodBarra" onChange={() => setSeguridad("CodBarra")} />Código de Barra
@@ -88,6 +101,7 @@ const FormTemplate = ({ }) => {
 					<label htmlFor="">Cargar Fondo</label>
 					<small>Si no carga fondo, se usara el color blanco por defecto</small>
 					<input type="file" name="" onChange={uploadBackgroundTemplate} id="" />
+					<button type="button" onClick={removeBackground} >Remover fondo</button>
 				</div>
 				<div>
 					<h3 onClick={() => handleToggle('fotografia')}>Fotografía</h3>
@@ -105,30 +119,7 @@ const FormTemplate = ({ }) => {
 					<h3 onClick={() => handleToggle('informacion')}>Información:</h3>
 					{selectedOption === 'informacion' && (
 						<div className="dropdown-menu">
-							<p>a</p>
-							{tipoSectorPlantilla == "academico" && (
-								<>
-									<input type="checkbox" name="" id="" />Nombres
-									<input type="checkbox" name="" id="" />Apellidos
-									<input type="checkbox" name="" id="" />Tipo de documento
-									<input type="checkbox" name="" id="" />N° Documento
-									<input type="checkbox" name="" id="" />Cargo
-									<input type="checkbox" name="" id="" />Grado
-									<input type="checkbox" name="" id="" />Curso
-									<input type="checkbox" name="" id="" />Jornada
-									<input type="checkbox" name="" id="" />Rh
-								</>
-							)}
-							{tipoSectorPlantilla == "empresarial" && (
-								<>
-									<input type="checkbox" name="" id="" />Nombres
-									<input type="checkbox" name="" id="" />Apellidos
-									<input type="checkbox" name="" id="" />Tipo de documento
-									<input type="checkbox" name="" id="" />N° Documento
-									<input type="checkbox" name="" id="" />Cargo
-									<input type="checkbox" name="" id="" />Rh
-								</>
-							)}
+							<FormTemplateInformation tipoSectorPlantilla={tipoSectorPlantilla} informationTemplate={informationTemplate} setinformationTemplate={setinformationTemplate} />
 						</div>
 					)}
 				</div>
@@ -146,7 +137,7 @@ const FormTemplate = ({ }) => {
 			</article>
 			<article>
 				<h2>Vista Previa</h2>
-				<PreviewTemplate templateDimension={templateDimension} background={backgroundUrL} photoDimension={photoDimension} seguridad={seguridad} />
+				<PreviewTemplate templateDimension={templateDimension} informationData={informationTemplate} setInformationData={setinformationTemplate} background={backgroundUrL} photoDimension={photoDimension} seguridad={seguridad} />
 			</article>
 		</section>
 	);
