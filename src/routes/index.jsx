@@ -7,6 +7,7 @@ import FormTemplate from "../components/FormTemplate/FormTemplate";
 import Template from "../Template/Template";
 import DragDrop from "../DragDrop/DragDrop";
 import NotFound from "../pages/NotFound/NotFound";
+import PDFDocument from "../components/PDFDocument/PDFDocument";
 
 
 const AplicattionRoutes = () => {
@@ -18,6 +19,7 @@ const AplicattionRoutes = () => {
         <Route path="/d" element={<DashboardLayout />} />
         <Route path="/template" element={<FormTemplate />} />
         <Route path="/plantilla" element={<DragDrop />} />
+        <Route path="/pdf" element={<PDFDocument />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

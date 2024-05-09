@@ -89,13 +89,13 @@ const FormTemplateInformation = ({ tipoSectorPlantilla, informationTemplate, set
 				<>
 					{DATAACADEMIC.map((academic) => (
 						<>
-							<input type="checkbox" name="Nombres" id="Nombres" value={academic.label} onChange={(e) => addInformationTemplate(e.target.value)} />{academic.nombre}
+							<input type="checkbox" name="Nombres" checked={informationTemplate.some((information) => information?.nombre === academic.label)} id="Nombres" value={academic.label} onChange={(e) => addInformationTemplate(e.target.value)} />{academic.nombre}
 							{dataSelected == academic.label ? (<span onClick={() => setDataSelected(null)}>X</span>) : (<span onClick={() => setDataSelected(academic.label)}>V</span>)}
 							{
 								informationTemplate.some((information) => information?.nombre === dataSelected) && dataSelected == academic.label ? (
 									<>
-										<b>Negrilla</b> <input type="checkbox" name="" id="" checked={ } value="bold" onChange={(e) => addStyleBoldFont(e, academic.label)} />
-										<i>Italica</i> <input type="checkbox" name="" id="" value="italic" onChange={(e) => addStyleItalicFont(e, academic.label)} />
+										<b>Negrilla</b> <input type="checkbox" name="" id="" checked={informationTemplate.some((information) => information?.nombre === academic.label && information.bold == true)} value="bold" onChange={(e) => addStyleBoldFont(e, academic.label)} />
+										<i>Italica</i> <input type="checkbox" checked={informationTemplate.some((information) => information?.nombre === dataSelected && information.italic == true)} name="" id="" value="italic" onChange={(e) => addStyleItalicFont(e, academic.label)} />
 										<span>Color: <input type="color" name="" id="" onChange={(e) => changeStyleColorFont(e, academic.label)} /></span>
 									</>
 								) : (<>
