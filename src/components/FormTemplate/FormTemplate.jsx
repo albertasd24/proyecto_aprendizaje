@@ -12,8 +12,8 @@ const FormTemplate = ({ }) => {
 	const [informationTemplate, setinformationTemplate] = useState([])
 	const [backgroundUrL, setBackgroundUrl] = useState("");
 	const [tipoSectorPlantilla, setTipoSectorPlantilla] = useState("");
-	const [photoDimension, setPhotoDimension] = useState({ width: 2.8, height: 3 })
-	const [templateDimension, setTemplateDimension] = useState({ width: 5.5, height: 8.5 })
+	const [photoDimension, setPhotoDimension] = useState({ width: 2.8, height: 3, unitMeasurement: "" })
+	const [templateDimension, setTemplateDimension] = useState({ width: 5.5, height: 8.5, unitMeasurement: "" })
 
 	const handleToggle = (option) => {
 		setSelectedOption((prevOption) => (prevOption === option ? null : option));
@@ -27,6 +27,7 @@ const FormTemplate = ({ }) => {
 	}
 
 	const changePhotoDimensionWith = (e) => {
+		
 		let photoWidth = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value, 10).toString() || 0;
 		setPhotoDimension({ width: photoWidth, height: photoDimension.height });
 		console.log(photoDimension);
@@ -34,14 +35,21 @@ const FormTemplate = ({ }) => {
 	const changeTemplateDimensionHeight = (e) => {
 		console.log(e.target.value);
 		let templateHeight = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value, 10).toString() || 0;
-		setTemplateDimension({ width: templateDimension.width, height: templateHeight });
+		console.log(templateHeight);
+		setTemplateDimension({ width: templateDimension.width, height: templateHeight, unitMeasurement:templateDimension.unitMeasurement });
 		console.log(photoDimension);
 	}
 
 	const changeTemplateDimensionWith = (e) => {
 		let templateWidth = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value, 10).toString() || 0;
-		setTemplateDimension({ width: templateWidth, height: photoDimension.height });
+		setTemplateDimension({ width: templateWidth, height: templateDimension.height, unitMeasurement:templateDimension.unitMeasurement });
 		console.log(photoDimension);
+	}
+
+	const changeTemplateunitMeasurement = (unit) => {
+		console.log(unit);
+		setTemplateDimension({ width:templateDimension.width, height: templateDimension.height, unitMeasurement: unit });
+		console.log(templateDimension);
 	}
 
 	const uploadBackgroundTemplate = (e) => {
@@ -53,10 +61,10 @@ const FormTemplate = ({ }) => {
 	const changeOrientation = (orientation) => {
 		if (orientation === "vertical") {
 			setOrientation("vertical");
-			setTemplateDimension({ width: templateDimension.height, height: templateDimension.width })
+			setTemplateDimension({ width: templateDimension.height, height: templateDimension.width, unitMeasurement:templateDimension.unitMeasurement })
 		} else {
 			setOrientation("horizontal");
-			setTemplateDimension({ width: templateDimension.height, height: templateDimension.width })
+			setTemplateDimension({ width: templateDimension.height, height: templateDimension.width, unitMeasurement:templateDimension.unitMeasurement })
 		}
 	}
 
@@ -86,11 +94,15 @@ const FormTemplate = ({ }) => {
 						<option value="empresarial">Empresarial</option>
 					</select>
 					<label htmlFor="withTemplate">Ancho </label>
-					<input type="number" name="" min={0} value={templateDimension.width} id="withTemplate" onChange={changeTemplateDimensionWith} />
+					<input type="number" name="" min={0} disabled={templateDimension.unitMeasurement == ""?true:false} value={templateDimension.width} id="withTemplate" onChange={changeTemplateDimensionWith} />
+					<label htmlFor="">Unidad de medida a usar</label>
+					<span onClick={()=>changeTemplateunitMeasurement("cm")}>cm</span>
+					<span onClick={()=>changeTemplateunitMeasurement("px")}>px</span>
 					<label htmlFor="heightTemplate">Alto </label>
-					<input type="number" name="" min={0} value={templateDimension.height} id="heightTemplate" onChange={changeTemplateDimensionHeight} />
+					<input type="number" name="" min={0} disabled={templateDimension.unitMeasurement == ""?true:false} value={templateDimension.height} id="heightTemplate" onChange={changeTemplateDimensionHeight} />
 					<label htmlFor="">Orientación</label>
 					<div className='orientations'>
+						{orientation}
 						<button type='button' className={orientation == "vertical" ? "orientation orientationSelected orientation-vertical" : "orientation orientation-vertical"} onClick={() => changeOrientation("vertical")}>Vertical</button>
 						<button type='button' className={orientation == "horizontal" ? "orientation orientationSelected orientation-horizontal" : "orientation orientation-horizontal"} onClick={() => changeOrientation("horizontal")}>Horizontal</button>
 					</div>
@@ -134,6 +146,7 @@ const FormTemplate = ({ }) => {
 						</div>
 					)}
 				</div>
+				<button>Generar PDF</button>
 			</article>
 			<article>
 				<h2>Vista Previa</h2>

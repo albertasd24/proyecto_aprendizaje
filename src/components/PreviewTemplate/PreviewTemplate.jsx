@@ -23,8 +23,8 @@ const PreviewTemplate = ({ background, orientation, informationData = [], setInf
         }
         : {
             backgroundColor: "#fff",
-            width: `${templateDimension.width}cm`,
-            height: `${templateDimension.height}cm`
+            width: `${templateDimension.width}${templateDimension.unitMeasurement}`,
+            height: `${templateDimension.height}${templateDimension.unitMeasurement}`
         };
 
     const handleMouseDown = (e, element, setPosition) => {
